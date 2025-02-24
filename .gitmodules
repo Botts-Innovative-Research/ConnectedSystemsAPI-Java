@@ -1,0 +1,3 @@
+[submodule "submodules/lib-ogc"]
+	path = submodules/lib-ogc
+	url = https://github.com/sensiasoft/lib-ogc
