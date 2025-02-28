@@ -1,6 +1,7 @@
 package org.connectedsystems.net;
 
 import com.google.common.net.HttpHeaders;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
@@ -8,8 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static org.connectedsystems.GsonFactory.gson;
 
 /**
  * Represents the response from an API request.
@@ -39,8 +38,9 @@ public class APIResponse<T> {
      * @param responseBody    The raw JSON response body from the API request,
      *                        or a string representation of the response if not in JSON format.
      * @param headers         The headers from the API response.
+     * @param gson            The Gson object to use for deserialization.
      */
-    public APIResponse(Class<T> clazz, int responseCode, String responseMessage, String responseBody, Map<String, List<String>> headers) {
+    public APIResponse(Class<T> clazz, int responseCode, String responseMessage, String responseBody, Map<String, List<String>> headers, Gson gson) {
         this.responseCode = responseCode;
         this.responseMessage = responseMessage;
         this.responseBody = responseBody;
@@ -55,10 +55,10 @@ public class APIResponse<T> {
         var jsonObj = JsonParser.parseString(responseBody).getAsJsonObject();
         if (jsonObj.has(JSON_ARRAY_ITEMS)) {
             isSingleItem = false;
-            jsonObj.get(JSON_ARRAY_ITEMS).getAsJsonArray().forEach(itemElement -> items.add(deserializeItem(clazz, itemElement)));
+            jsonObj.get(JSON_ARRAY_ITEMS).getAsJsonArray().forEach(itemElement -> items.add(deserializeItem(clazz, itemElement, gson)));
         } else {
             isSingleItem = true;
-            items.add(deserializeItem(clazz, jsonObj));
+            items.add(deserializeItem(clazz, jsonObj, gson));
         }
     }
 
@@ -69,10 +69,11 @@ public class APIResponse<T> {
      *                   or {@link Void} if the response is not expected to contain any items,
      *                   e.g., for POST, PUT, or DELETE requests.
      * @param apiRequest The APIRequest object to get the response from.
+     * @param gson       The Gson object to use for deserialization.
      * @throws IOException if an error occurs while making the API request.
      */
-    public APIResponse(Class<T> clazz, APIRequest apiRequest) throws IOException {
-        this(clazz, apiRequest.getConnection().getResponseCode(), apiRequest.getConnection().getResponseMessage(), apiRequest.getResponseBody(), apiRequest.getConnection().getHeaderFields());
+    public APIResponse(Class<T> clazz, APIRequest apiRequest, Gson gson) throws IOException {
+        this(clazz, apiRequest.getConnection().getResponseCode(), apiRequest.getConnection().getResponseMessage(), apiRequest.getResponseBody(), apiRequest.getConnection().getHeaderFields(), gson);
     }
 
     /**
@@ -80,9 +81,10 @@ public class APIResponse<T> {
      *
      * @param clazz       The class type of the item to deserialize.
      * @param jsonElement The JSON element representing the item.
+     * @param gson        The Gson object to use for deserialization.
      * @return The deserialized item of type T.
      */
-    private T deserializeItem(Class<T> clazz, JsonElement jsonElement) {
+    private T deserializeItem(Class<T> clazz, JsonElement jsonElement, Gson gson) {
         return gson.fromJson(jsonElement, clazz);
     }
 

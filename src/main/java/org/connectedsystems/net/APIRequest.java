@@ -1,5 +1,7 @@
 package org.connectedsystems.net;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +9,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
+
+import static org.connectedsystems.GsonFactory.gson;
 
 /**
  * Represents an API request to a server.
@@ -28,7 +32,24 @@ public class APIRequest {
      */
     public <T> APIResponse<T> execute(Class<T> clazz) throws IOException {
         execute();
-        return new APIResponse<>(clazz, this);
+        return new APIResponse<>(clazz, this, gson);
+    }
+
+    /**
+     * Execute the API request and return the response as an APIResponse object.
+     *
+     * @param clazz The class type to deserialize the response into.
+     *              This should be a class that matches the structure of the expected response,
+     *              or {@link Void} if no response body is expected.
+     * @param <T>   The type of the response data.
+     * @param gson  The Gson object to use for deserialization.
+     *              This can be used to customize the deserialization process with custom TypeAdapters.
+     * @return An APIResponse object containing the response data.
+     * @throws IOException if an error occurs while making the API request or reading the response.
+     */
+    public <T> APIResponse<T> execute(Class<T> clazz, Gson gson) throws IOException {
+        execute();
+        return new APIResponse<>(clazz, this, gson);
     }
 
     /**

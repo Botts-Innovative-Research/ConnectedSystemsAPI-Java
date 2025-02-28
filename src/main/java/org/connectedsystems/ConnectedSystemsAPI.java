@@ -11,6 +11,7 @@ public class ConnectedSystemsAPI {
     protected final String authorizationToken;
     protected final SystemsAPI systemsAPI;
     protected final DataStreamsAPI dataStreamsAPI;
+    protected final ObservationsAPI observationsAPI;
 
     /**
      * Constructs a ConnectedSystemsAPI object with the given API root and authentication token.
@@ -23,6 +24,7 @@ public class ConnectedSystemsAPI {
         this.authorizationToken = authenticationToken;
         this.systemsAPI = new SystemsAPI(this);
         this.dataStreamsAPI = new DataStreamsAPI(this);
+        this.observationsAPI = new ObservationsAPI(this);
     }
 
     /**
@@ -57,5 +59,9 @@ public class ConnectedSystemsAPI {
      */
     public DataStreamsAPI getDataStreamsAPI() {
         return dataStreamsAPI;
+    }
+
+    public ObservationsAPI getObservationsAPI() {
+        return observationsAPI;
     }
 }

@@ -7,7 +7,8 @@ public enum Endpoint {
     SYSTEMS_COLLECTION("systems"),
     SUBSYSTEMS_COLLECTION("subsystems"),
     DATA_STREAMS_COLLECTION("datastreams"),
-    DATA_STREAM_SCHEMA("schema");
+    DATA_STREAM_SCHEMA("schema"),
+    OBSERVATIONS_COLLECTION("observations");
 
     private final String path;
 

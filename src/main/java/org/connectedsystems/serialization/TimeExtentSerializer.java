@@ -15,10 +15,19 @@ public class TimeExtentSerializer implements JsonSerializer<TimeExtent>, JsonDes
 
     @Override
     public TimeExtent deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-        List<String> validTimeList = context.deserialize(json, List.class);
-        if (validTimeList.size() != 2) {
-            throw new JsonParseException("Invalid validTime array, expected exactly 2 elements.");
+        if (json.isJsonArray()) {
+            // Time extent
+            List<String> validTimeList = context.deserialize(json, List.class);
+            if (validTimeList.size() != 2) {
+                throw new JsonParseException("Invalid validTime array, expected exactly 2 elements.");
+            }
+            return TimeExtent.parse(validTimeList.get(0) + "/" + validTimeList.get(1));
+        } else if (json.isJsonPrimitive()) {
+            // Time instant
+            String validTime = context.deserialize(json, String.class);
+            return TimeExtent.parse(validTime);
+        } else {
+            throw new JsonParseException("Invalid validTime, expected an array or a string.");
         }
-        return TimeExtent.parse(validTimeList.get(0) + "/" + validTimeList.get(1));
     }
 }
