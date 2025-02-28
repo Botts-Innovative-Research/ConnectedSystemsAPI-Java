@@ -10,6 +10,7 @@ public class ConnectedSystemsAPI {
     protected final String apiRoot;
     protected final String authorizationToken;
     protected final SystemsAPI systemsAPI;
+    protected final DataStreamsAPI dataStreamsAPI;
 
     /**
      * Constructs a ConnectedSystemsAPI object with the given API root and authentication token.
@@ -21,6 +22,7 @@ public class ConnectedSystemsAPI {
         this.apiRoot = apiRoot;
         this.authorizationToken = authenticationToken;
         this.systemsAPI = new SystemsAPI(this);
+        this.dataStreamsAPI = new DataStreamsAPI(this);
     }
 
     /**
@@ -46,5 +48,14 @@ public class ConnectedSystemsAPI {
      */
     public SystemsAPI getSystemsAPI() {
         return systemsAPI;
+    }
+
+    /**
+     * Get the {@link DataStreamsAPI} object for this Connected Systems API.
+     * The DataStreamsAPI object provides methods for interacting with the data streams endpoint of the API,
+     * such as listing all data streams, getting a specific data stream, and creating a new data stream.
+     */
+    public DataStreamsAPI getDataStreamsAPI() {
+        return dataStreamsAPI;
     }
 }

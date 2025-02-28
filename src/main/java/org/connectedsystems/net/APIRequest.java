@@ -232,7 +232,6 @@ public class APIRequest {
             StringBuilder urlWithParams = new StringBuilder(apiRoot);
             appendResources(urlWithParams);
             appendQueryString(urlWithParams);
-            System.out.println("URL: " + urlWithParams);
 
             URL url = new URL(urlWithParams.toString());
             apiRequest.connection = (HttpURLConnection) url.openConnection();

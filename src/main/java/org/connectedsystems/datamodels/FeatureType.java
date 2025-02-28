@@ -5,7 +5,7 @@ public enum FeatureType {
     ACTUATOR("http://www.w3.org/ns/sosa/Actuator", "sosa:Actuator", "Actuator"),
     PLATFORM("http://www.w3.org/ns/sosa/Platform", "sosa:Platform", "Platform"),
     SAMPLER("http://www.w3.org/ns/sosa/Sampler", "sosa:Sampler", "Sampler"),
-    SYSTEM("http://www.w3.org/ns/ssn/asdasdasdasd", "ssn:System", "System");
+    SYSTEM("http://www.w3.org/ns/ssn/System", "ssn:System", "System");
 
     private final String url;
     private final String curie;

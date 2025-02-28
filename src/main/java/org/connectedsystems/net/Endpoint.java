@@ -6,7 +6,8 @@ package org.connectedsystems.net;
 public enum Endpoint {
     SYSTEMS_COLLECTION("systems"),
     SUBSYSTEMS_COLLECTION("subsystems"),
-    ;
+    DATA_STREAMS_COLLECTION("datastreams"),
+    DATA_STREAM_SCHEMA("schema");
 
     private final String path;
 
