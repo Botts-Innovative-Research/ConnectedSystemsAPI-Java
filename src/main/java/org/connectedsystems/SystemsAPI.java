@@ -107,6 +107,25 @@ public class SystemsAPI {
     }
 
     /**
+     * Get the latest {@link SystemResource} valid before or at the current time, by default.
+     *
+     * @param systemUid The UID of the system to get the latest version of.
+     * @return {@link APIResponse} containing the latest {@link SystemResource} object.
+     * @throws IOException if an error occurs while making the API request.
+     */
+    public APIResponse<SystemResource> getSystemByUid(String systemUid) throws IOException {
+        APIRequest apiRequest = new APIRequest.APIRequestBuilder()
+                .setApiRoot(connectedSystemsAPI.apiRoot)
+                .setResourcePath(Endpoint.SYSTEMS_COLLECTION)
+                .setAuthorizationToken(connectedSystemsAPI.authorizationToken)
+                .setRequestMethod(HttpRequestMethod.GET)
+                .setQueryParams(Map.of("uid", systemUid))
+                .build();
+
+        return apiRequest.execute(SystemResource.class);
+    }
+
+    /**
      * Add a new top-level {@link SystemResource} to the server (i.e., the system will have no parent).
      *
      * @param systemResource The {@link SystemResource} to add.
