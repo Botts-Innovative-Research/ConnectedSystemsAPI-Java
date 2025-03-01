@@ -2,21 +2,21 @@ package org.connectedsystems.datamodels;
 
 import com.google.gson.annotations.SerializedName;
 import net.opengis.swe.v20.DataBlock;
-import org.vast.util.TimeExtent;
 
+import java.time.Instant;
 import java.util.List;
 
 public class ObservationResource {
     protected String id;
     @SerializedName("datastream@id")
-    protected String datastreamId;
+    protected String dataStreamId;
     @SerializedName("samplingFeature@id")
     protected String samplingFeatureId;
     @SerializedName("procedure@link")
     protected Link procedureLink;
-    protected TimeExtent phenomenonTime;
+    protected Instant phenomenonTime;
     protected DataBlock result;
-    protected TimeExtent resultTime;
+    protected Instant resultTime;
     @SerializedName("result@link")
     protected Link resultLink;
     protected List<Link> links;
@@ -31,8 +31,8 @@ public class ObservationResource {
     /**
      * Local ID of the datastream that the observation is part of.
      */
-    public String getDatastreamId() {
-        return datastreamId;
+    public String getDataStreamId() {
+        return dataStreamId;
     }
 
     /**
@@ -53,14 +53,14 @@ public class ObservationResource {
      * The time at which the observation result is a valid estimate of the sampling feature property(ies).
      * Defaults to the same value as resultTime.
      */
-    public TimeExtent getPhenomenonTime() {
+    public Instant getPhenomenonTime() {
         return phenomenonTime;
     }
 
     /**
      * The time at which the observation result was generated.
      */
-    public TimeExtent getResultTime() {
+    public Instant getResultTime() {
         return resultTime;
     }
 
@@ -91,7 +91,7 @@ public class ObservationResource {
         StringBuilder sb = new StringBuilder("{");
         if (id != null)
             sb.append("id: ").append(id).append(", ");
-        sb.append("datastreamId: ").append(datastreamId).append(", ");
+        sb.append("datastreamId: ").append(dataStreamId).append(", ");
         if (samplingFeatureId != null)
             sb.append("samplingFeatureId: ").append(samplingFeatureId).append(", ");
         if (procedureLink != null)
@@ -136,8 +136,8 @@ public class ObservationResource {
         /**
          * Local ID of the datastream that the observation is part of.
          */
-        public Builder setDatastreamId(String datastreamId) {
-            observationResource.datastreamId = datastreamId;
+        public Builder setDataStreamId(String dataStreamId) {
+            observationResource.dataStreamId = dataStreamId;
             return this;
         }
 
@@ -161,7 +161,7 @@ public class ObservationResource {
          * The time at which the observation result is a valid estimate of the sampling feature property(ies).
          * Defaults to the same value as resultTime.
          */
-        public Builder setPhenomenonTime(TimeExtent phenomenonTime) {
+        public Builder setPhenomenonTime(Instant phenomenonTime) {
             observationResource.phenomenonTime = phenomenonTime;
             return this;
         }
@@ -169,7 +169,7 @@ public class ObservationResource {
         /**
          * The time at which the observation result was generated.
          */
-        public Builder setResultTime(TimeExtent resultTime) {
+        public Builder setResultTime(Instant resultTime) {
             observationResource.resultTime = resultTime;
             return this;
         }

@@ -434,8 +434,6 @@ public class DataStreamResource {
         public DataStreamResource build() {
             if (dataStreamResource.name == null || dataStreamResource.name.isEmpty())
                 throw new IllegalStateException("name must be set.");
-            if (dataStreamResource.phenomenonTime == null)
-                throw new IllegalStateException("phenomenonTime must be set.");
             if (dataStreamResource.outputName == null || dataStreamResource.outputName.isEmpty())
                 throw new IllegalStateException("outputName must be set.");
             return dataStreamResource;

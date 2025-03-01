@@ -8,6 +8,8 @@ import org.connectedsystems.datamodels.FeatureType;
 import org.connectedsystems.serialization.*;
 import org.vast.util.TimeExtent;
 
+import java.time.Instant;
+
 public class GsonFactory {
     public static final Gson gson;
 
@@ -17,6 +19,8 @@ public class GsonFactory {
                 .registerTypeAdapter(TimeExtent.class, new TimeExtentSerializer())
                 .registerTypeAdapter(DataComponent.class, new DataComponentSerializer())
                 .registerTypeAdapter(DataRecord.class, new DataRecordSerializer())
+                .registerTypeAdapter(Instant.class, new InstantSerializer())
+                .setPrettyPrinting()
                 .create();
     }
 
@@ -36,7 +40,9 @@ public class GsonFactory {
                 .registerTypeAdapter(TimeExtent.class, new TimeExtentSerializer())
                 .registerTypeAdapter(DataComponent.class, new DataComponentSerializer())
                 .registerTypeAdapter(DataRecord.class, new DataRecordSerializer())
+                .registerTypeAdapter(Instant.class, new InstantSerializer())
                 .registerTypeAdapterFactory(new DataBlockTypeAdapterFactory(resultSchema))
+                .setPrettyPrinting()
                 .create();
     }
 }

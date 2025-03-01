@@ -1,11 +1,12 @@
 package org.connectedsystems.util;
 
+import net.opengis.swe.v20.DataComponent;
 import org.vast.util.TimeExtent;
 
 import java.util.List;
 
 /**
- * Query string parameters used to filter the results of a {@link org.connectedsystems.ObservationsAPI#getObservationsOfDataStream(String, ObservationsOfDataStreamQueryBuilder)} request.
+ * Query string parameters used to filter the results of a {@link org.connectedsystems.ObservationsAPI#getObservationsOfDataStream(String, DataComponent, ObservationsOfDataStreamQueryBuilder)} request.
  */
 public class ObservationsOfDataStreamQueryBuilder extends QueryStringBuilder {
     /**

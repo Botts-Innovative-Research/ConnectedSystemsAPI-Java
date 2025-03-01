@@ -12,8 +12,6 @@ import org.connectedsystems.util.ObservationsQueryBuilder;
 
 import java.io.IOException;
 
-import static org.connectedsystems.GsonFactory.gson;
-
 public class ObservationsAPI {
     private final ConnectedSystemsAPI connectedSystemsAPI;
 
@@ -97,6 +95,29 @@ public class ObservationsAPI {
     }
 
     /**
+     * Get a specific observation by its ID.
+     *
+     * @param observationId the ID of the observation.
+     * @param resultSchema  the schema of the observation result.
+     *                      This is used to deserialize the result field of the observation.
+     *                      Typically, this comes from {@link ObservationSchema#getResultSchema()} of the datastream.
+     * @return {@link APIResponse} containing the {@link ObservationResource}.
+     * @throws IOException if an error occurs while making the API request.
+     */
+    public APIResponse<ObservationResource> getObservation(String observationId, DataComponent resultSchema) throws IOException {
+        var gson = GsonFactory.createGson(resultSchema);
+        APIRequest apiRequest = new APIRequest.APIRequestBuilder()
+                .setApiRoot(connectedSystemsAPI.apiRoot)
+                .setResourcePath(Endpoint.OBSERVATIONS_COLLECTION)
+                .setResourceId(observationId)
+                .setAuthorizationToken(connectedSystemsAPI.authorizationToken)
+                .setRequestMethod(HttpRequestMethod.GET)
+                .build();
+
+        return apiRequest.execute(ObservationResource.class, gson);
+    }
+
+    /**
      * Add a new observation to an existing datastream.
      *
      * @param dataStreamId        the ID of the datastream.
@@ -104,7 +125,8 @@ public class ObservationsAPI {
      * @return {@link APIResponse} containing the response from the server.
      * @throws IOException if an error occurs while making the API request.
      */
-    public APIResponse<Void> createObservation(String dataStreamId, ObservationResource observationResource) throws IOException {
+    public APIResponse<Void> createObservation(String dataStreamId, ObservationResource observationResource, DataComponent resultSchema) throws IOException {
+        var gson = GsonFactory.createGson(resultSchema);
         APIRequest apiRequest = new APIRequest.APIRequestBuilder()
                 .setApiRoot(connectedSystemsAPI.apiRoot)
                 .setResourcePath(Endpoint.DATA_STREAMS_COLLECTION)
@@ -126,7 +148,8 @@ public class ObservationsAPI {
      * @return {@link APIResponse} containing the response from the server.
      * @throws IOException if an error occurs while making the API request.
      */
-    public APIResponse<Void> updateObservation(String observationId, ObservationResource observationResource) throws IOException {
+    public APIResponse<Void> updateObservation(String observationId, ObservationResource observationResource, DataComponent resultSchema) throws IOException {
+        var gson = GsonFactory.createGson(resultSchema);
         APIRequest apiRequest = new APIRequest.APIRequestBuilder()
                 .setApiRoot(connectedSystemsAPI.apiRoot)
                 .setResourcePath(Endpoint.OBSERVATIONS_COLLECTION)

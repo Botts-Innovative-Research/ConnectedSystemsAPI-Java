@@ -24,7 +24,6 @@ public class DataBlockTypeAdapterFactory implements TypeAdapterFactory {
             return null;
         }
 
-        TypeAdapter<DataBlock> defaultAdapter = gson.getDelegateAdapter(this, TypeToken.get(DataBlock.class));
-        return (TypeAdapter<T>) new DataBlockSerializer(defaultAdapter, resultSchema);
+        return (TypeAdapter<T>) new DataBlockSerializer(resultSchema);
     }
 }

@@ -110,7 +110,6 @@ public class DataStreamsAPI {
      * @throws IOException if an error occurs while making the API request.
      */
     public APIResponse<Void> createDataStream(String systemId, DataStreamResource dataStreamResource) throws IOException {
-        System.out.println("createDataStream: " + gson.toJson(dataStreamResource));
         APIRequest apiRequest = new APIRequest.APIRequestBuilder()
                 .setApiRoot(connectedSystemsAPI.apiRoot)
                 .setResourcePath(Endpoint.SYSTEMS_COLLECTION)
